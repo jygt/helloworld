@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -162,5 +164,31 @@ class HelloWorldApplicationTests {
 
 	}
 	//	 */
+	//@Resource
+	//private RedisTemplate objRedisTemplate;
+	@Resource
+	private StringRedisTemplate objStringRedisTemplate;
+
+	@Test
+	public void testRedis(){
+
+		//objStringRedisTemplate.opsForValue().set("a","abcd");
+
+		String name = (String) objStringRedisTemplate.opsForValue().get("a");
+		System.out.println(name);
+
+		objStringRedisTemplate.delete("b");
+
+		objStringRedisTemplate.opsForValue().set("b","hello");
+
+		name = (String) objStringRedisTemplate.opsForValue().get("b");
+		System.out.println(name);
+
+		objStringRedisTemplate.opsForList().leftPush("al","abcd");
+		objStringRedisTemplate.opsForSet().add("as","abcf");
+		objStringRedisTemplate.opsForZSet().add("azs","hello",100);
+		objStringRedisTemplate.opsForHash().put("ah","key1","vale");
+
+	}
 
 }

@@ -3,6 +3,7 @@ package com.example.helloWorld;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ImportResource;
 
 /*
 * 组合注解 ： 包含
@@ -17,6 +18,11 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * 支持servlet filter listener 自动注册
  */
 @ServletComponentScan
+
+/**
+ *
+ */
+@ImportResource(locations = {"classpath:spring-mvc.xml"})
 public class HelloWorldApplication {
 
 	public static void main(String[] args) {
