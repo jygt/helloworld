@@ -25,4 +25,17 @@ public class TUrlController {
 
         return "turl";
     }
+
+    @RequestMapping("/retry")
+    public String retry(Model model)
+    {
+        // 查询数据库素有记录
+        List<TUrl> turlList = objTUrlService.findAllRetry();
+
+        model.addAttribute("urllist",turlList);
+
+        System.out.println("********************************************");
+
+        return "turl";
+    }
 }

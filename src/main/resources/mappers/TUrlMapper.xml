@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helloWorld.dao.TUrlMybatisDao">
+
+    <resultMap id="TUrlMap" type="com.example.helloWorld.TUrl">
+        <id column="f_id" property="id" jdbcType="INTEGER"/>
+        <id column="f_name" property="FName" jdbcType="VARCHAR"/>
+        <id column="f_url" property="f_url" jdbcType="VARCHAR"/>
+
+        <id column="f_cat" property="f_cat" jdbcType="INTEGER"/>
+        <id column="f_passwd" property="f_passwd" jdbcType="VARCHAR"/>
+        <id column="f_acc" property="f_acc" jdbcType="VARCHAR"/>
+        <id column="f_crt_tm" property="f_crt_tm" jdbcType="VARCHAR"/>
+        <id column="f_mod_tm" property="f_mod_tm" jdbcType="VARCHAR"/>
+        <id column="f_desc" property="f_desc" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <select id="findByName" resultMap="TUrlMap" parameterType="String">
+        select * from t_url u
+        <where>
+            u.f_name=#{name}
+        </where>
+    </select>
+
+</mapper>

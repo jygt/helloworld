@@ -1,6 +1,12 @@
 package com.example.helloWorld;
 
+import com.example.helloWorld.activemq.AyMood;
+import com.example.helloWorld.activemq.AyMoodProducer;
+import com.example.helloWorld.activemq.AyMoodService;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,13 +18,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.annotation.Resource;
+import javax.jms.Destination;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @SpringBootTest
 class HelloWorldApplicationTests {
+
+	private static final Logger logger = LoggerFactory.getLogger(HelloWorldApplicationTests.class);
 
 	@Test
 	void contextLoads() {
@@ -188,6 +199,95 @@ class HelloWorldApplicationTests {
 		objStringRedisTemplate.opsForSet().add("as","abcf");
 		objStringRedisTemplate.opsForZSet().add("azs","hello",100);
 		objStringRedisTemplate.opsForHash().put("ah","key1","vale");
+
+	}
+
+
+	@Test
+	public void testMyBatis(){
+		TUrl objTUrl = objTUrlService.findByName("GIT");
+		logger.info("GIT" + ":" + objTUrl.getF_url());
+	}
+
+	@Resource
+	private AyMoodService objAyMoodService;
+
+	@Test
+	public void testAyMood(){
+		AyMood objAyMood = new AyMood();
+
+		objAyMood.setId("1");
+		objAyMood.setUserId("1");
+		objAyMood.setContent("This is the first shuoshuo; 这是第一条说说");
+		objAyMood.setPraiseNum(0);
+		objAyMood.setPublishTime(new Date());
+
+		// 插入数据到数据库
+		AyMood objRes = objAyMoodService.save(objAyMood);
+
+	}
+
+	@Resource
+	private AyMoodProducer objAyMoodProducer;
+
+	@Test
+	public void testActiveMQ(){
+		Destination dest = new ActiveMQQueue("ay.queue");
+		objAyMoodProducer.sendMessage(dest,"hello mq !!! 你好，队列啊！！");
+	}
+
+	@Test
+	public void testActiveMQ2AyMood(){
+		AyMood objAyMood = new AyMood();
+
+		objAyMood.setId("3");
+		objAyMood.setUserId("3");
+		objAyMood.setContent("This is the first shuoshuo; 这是第一条说说");
+		objAyMood.setPraiseNum(0);
+		objAyMood.setPublishTime(new Date());
+
+		// 插入数据到数据库
+		String res  = objAyMoodService.asynSave(objAyMood);
+		logger.info("Async deploy note : "+ res);
+	}
+
+	// sync vs async
+	@Test
+	public void testTUrlFindAllAsync() throws InterruptedException {
+		long starttime = System.currentTimeMillis();
+		logger.info("01 call findAllAsync :");
+		Future<List<TUrl>> objListUrl_01 = objTUrlService.findAllAsync();
+		logger.info("02 call findAllAsync :");
+		Future<List<TUrl>> objListUrl_02 = objTUrlService.findAllAsync();
+		logger.info("03 call findAllAsync :");
+		Future<List<TUrl>> objListUrl_03 = objTUrlService.findAllAsync();
+		while(true){
+			if(objListUrl_01.isDone() && objListUrl_02.isDone() && objListUrl_03.isDone())
+				break;
+			else
+				Thread.sleep(10);
+		}
+		long endtime = System.currentTimeMillis();
+		logger.info("Aysnc Total Exhaused :"+(endtime-starttime) + "ms");
+
+
+
+
+	}
+	@Test
+
+	public void testTUrlFindAll() throws InterruptedException {
+		long starttime = System.currentTimeMillis();
+		logger.info("01 call findAll :");
+		List<TUrl> objList_01 = objTUrlService.findAll();
+		logger.info("02 call findAll :");
+		List<TUrl> objList_02 = objTUrlService.findAll();
+		logger.info("03 call findAll :");
+		List<TUrl> objList_03 = objTUrlService.findAll();
+		long endtime = System.currentTimeMillis();
+		logger.info("Total Exhaused :"+(endtime-starttime) + "ms");
+
+
 
 	}
 
