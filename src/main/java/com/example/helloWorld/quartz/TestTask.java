@@ -8,6 +8,6 @@ public class TestTask {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(TestTask.class);
 
     public void run(){
-        logger.info("TestTask Timer was launched at here!  ");
+        logger.debug("TestTask Timer was launched at here!  ");
     }
 }
