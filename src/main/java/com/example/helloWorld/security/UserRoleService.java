@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface UserRoleService  {
     List<UserRole> findByUserId(String userId);
+    Long Count();
 }

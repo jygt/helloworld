@@ -11,6 +11,11 @@ public class UserRoleServiceImpl implements UserRoleService {
     private UserRoleRepository objUserRoleRepository;
 
     @Override
+    public Long Count() {
+        return objUserRoleRepository.count();
+    }
+
+    @Override
     public List<UserRole> findByUserId(String userId){
         return objUserRoleRepository.findByUserId(userId);
     }

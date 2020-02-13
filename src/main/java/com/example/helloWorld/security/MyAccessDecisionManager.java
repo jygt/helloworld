@@ -31,17 +31,17 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
         }
         else {
             String needRole;
-            logger.info("MyAccessDecisionManager::decide." + collection.size());
+            logger.info("MyAccessDecisionManager::decide. size : " + collection.size());
 
             for(Iterator<ConfigAttribute> iter = collection.iterator(); iter.hasNext(); ) {
                 needRole = iter.next().getAttribute();
 
-                logger.info("MyAccessDecisionManager::decide.  " + needRole + " : " + authentication.getAuthorities().size() );
+                logger.info("MyAccessDecisionManager::decide. need " + needRole + " : size " + authentication.getAuthorities().size() );
 
 
                 for(GrantedAuthority ga : authentication.getAuthorities()) {
 
-                    logger.info("MyAccessDecisionManager::decide.  " + needRole + " vs " + ga.getAuthority());
+                    logger.info("MyAccessDecisionManager::decide.  need " + needRole + " vs " + ga.getAuthority());
 
                     if(needRole.trim().equals(ga.getAuthority().trim())) {
                         return;
@@ -54,6 +54,9 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 
     @Override
     public boolean supports(ConfigAttribute configAttribute) {
+
+        logger.info("supports   "+configAttribute.toString());
+
         return true;
     }
 

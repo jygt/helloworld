@@ -34,11 +34,14 @@ public class MyAbstractSecurityInterceptor extends AbstractSecurityInterceptor i
     }
     public void invoke(FilterInvocation fi) throws IOException, ServletException {
 
+
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
             //执行下一个拦截器
+
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
-        } finally {
+        }
+        finally {
             super.afterInvocation(token, null);
         }
     }
@@ -50,6 +53,7 @@ public class MyAbstractSecurityInterceptor extends AbstractSecurityInterceptor i
 
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
+        logger.info("obtainSecurityMetadataSource::securityMetadataSource");
         return this.securityMetadataSource;
     }
 }

@@ -3,6 +3,7 @@ package com.example.helloWorld.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -98,6 +99,8 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
             }
         }
         logger.info("MyFilterInvocationSecurityMetadataSource::getAttributes " + "null");
+        // 对于没有纳入配置的URL，默认不做处理。允许访问的
+        //throw new AccessDeniedException("资源没有配置：当前访问没有权限");
         return null;
     }
 

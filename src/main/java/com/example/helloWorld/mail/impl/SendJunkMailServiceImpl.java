@@ -53,7 +53,7 @@ public class SendJunkMailServiceImpl implements SendJunkMailService {
 
             }
             msg.setText(sBffer.toString());
-            this.mailSender.send(objMimeMessage);
+            //this.mailSender.send(objMimeMessage);
         }
         catch (Exception exp){
             logger.error("sendJunkMail error and url = %s",urlList,exp);
