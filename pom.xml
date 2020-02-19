@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example.helloworld</groupId>
 	<artifactId>helloworld</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>helloWorld</name>
 	<description>helloWorld project for Spring Boot</description>
 
@@ -139,6 +139,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- mongo -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 	</dependencies>
 

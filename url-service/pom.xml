@@ -42,7 +42,7 @@
 			<version>0.0.1</version>
 		</dependency>
 		<!-- 总是报错误 : 不能创建bean，dubbo与sprongboot冲突了
-
+ 
 		<dependency>
 			<groupId>io.dubbo.springboot</groupId>
 			<artifactId>spring-boot-starter-dubbo</artifactId>

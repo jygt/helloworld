@@ -1,0 +1,17 @@
+server:
+  port: 80
+spring:
+  cloud:
+    gateway:
+      locator:
+        enabled: true
+      default-filters:
+        - AddResponseHeader=X-Response-Default-Foo,Default-Bar
+      routes:
+        - id: qq_route
+          uri: http://qq.com
+          order: 2
+          predicates:
+            - Path=/qq
+          filters:
+            - AddResponseHeader=hello, Gateway

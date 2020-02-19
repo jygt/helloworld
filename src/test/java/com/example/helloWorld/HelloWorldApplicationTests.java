@@ -3,6 +3,9 @@ package com.example.helloWorld;
 import com.example.helloWorld.activemq.AyMood;
 import com.example.helloWorld.activemq.AyMoodProducer;
 import com.example.helloWorld.activemq.AyMoodService;
+import com.example.helloWorld.mongo.UserDoc;
+import com.example.helloWorld.mongo.UserDocService;
+import com.example.helloWorld.security.UserService;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -289,6 +292,23 @@ class HelloWorldApplicationTests {
 
 
 
+	}
+
+	@Resource
+	private UserDocService objUserDocService;
+
+	@Test
+	public void testMongo(){
+		UserDoc objUserDoc = new UserDoc();
+
+		objUserDoc.setId("2");
+		objUserDoc.setName("yangchengfei");
+		objUserDoc.setAge("3");
+		objUserDoc.setFile("1.doc");
+
+		objUserDocService.save(objUserDoc);
+
+		logger.info("保存成功");
 	}
 
 }
